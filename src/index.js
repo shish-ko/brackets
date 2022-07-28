@@ -1,37 +1,23 @@
- function check(str, bracketsConfig) {
-
+module.exports = function check(str, bracketsConfig) {
+  let obj={};
+  for (let i=0; i < bracketsConfig.length; i++){
+    obj[bracketsConfig[i][1]]=bracketsConfig[i][0];
+  }
   const arr=[];
-  
+ 
   for(let i=0; i< str.length; i++){
     let currentSymbol=str[i];
-    
-    for(j in bracketsConfig){
-      if (bracketsConfig[j][0] === currentSymbol){
-        arr.push(currentSymbol);
-        break;
-      } else {
-        let symbolPairIndex=''
-        if(bracketsConfig[j][1]===currentSymbol){
-          symbolPairIndex = j;
-          if(bracketsConfig[symbolPairIndex][0] === arr[arr.length-1]){
-            arr.pop();
-            
-          } else {
-            arr.push(currentSymbol);
-          }
-        }
-      }
-         
+    let topSymbol=arr[arr.length-1];
+    if (arr.length === 0){
       
-    } 
-    
-    
+       arr.push(currentSymbol);       
+      } else if (topSymbol === obj[currentSymbol]){
+        arr.pop()
+      }else{
+        arr.push(currentSymbol);
+      }
+
   }
-
-  console.log (arr);
-
-
-  
+  return arr.length === 0;
 }
-const config6 = [['1', '2'], ['3', '4'], ['5', '6'], ['7', '7'], ['8', '8']]
-check('111115611111111222288888822225577877778775555666677777777776622222', config6)
+
